@@ -239,7 +239,7 @@ public class Quote_Page extends BasePage
 	public void add_accessory() throws IOException, InterruptedException
 	{
 		WebElement sa = SuggestedAccessories;
-		String satext = sa.getText(); 
+		String satext = sa.getText();
 		
 		try
 		{
