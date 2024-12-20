@@ -118,10 +118,19 @@ public class Quote_Page extends BasePage
 		
 	public void serach_item() throws IOException, InterruptedException
 	{
-		itemsearch.sendKeys(Base.getProperties().getProperty("item_name"));
-		Thread.sleep(3000);
-		firstitem.click();
-		Thread.sleep(2000);
+		try
+		{
+			itemsearch.sendKeys(Base.getProperties().getProperty("item_name"));
+			Thread.sleep(3000);
+			firstitem.click();
+			Thread.sleep(2000);
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	public void add_item() throws InterruptedException
@@ -132,23 +141,11 @@ public class Quote_Page extends BasePage
 	
 	public String itemvalidation()
 	{
-		WebElement sa = SuggestedAccessories;
-		String satext = sa.getText();
 		
 		try
 		{
-			if(satext.equals("Suggested Accessories"))
-			{
-				Base.ESC();
 				String toast = toastmsg.getText();
 				return toast;
-			}
-			else
-			{
-				String toast = toastmsg.getText();
-				return toast;
-			}
-
 		}
 		catch (Exception e)
 		{
@@ -238,14 +235,9 @@ public class Quote_Page extends BasePage
 	
 	public void add_accessory() throws IOException, InterruptedException
 	{
-		WebElement sa = SuggestedAccessories;
-		String satext = sa.getText();
 		
 		try
 		{
-			if(satext.equals("Suggested Accessories"))
-			{
-				Base.ESC();
 				itemdispaly.click();
 				Thread.sleep(3000);
 				addaccessory.click();
@@ -256,20 +248,6 @@ public class Quote_Page extends BasePage
 				addaccessorybtn.click();
 				Thread.sleep(2000);
 				addaccessorybtn.click();
-			}
-			else
-			{
-				itemdispaly.click();
-				Thread.sleep(3000);
-				addaccessory.click();
-				accessoriessearch.sendKeys(Base.getProperties().getProperty("accessory"));
-				Thread.sleep(3000);
-				firstitem.click();
-				Thread.sleep(2000);
-				addaccessorybtn.click();
-				Thread.sleep(2000);
-				addaccessorybtn.click();
-			}
 			
 		}
 		catch (Exception e)

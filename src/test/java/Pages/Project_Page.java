@@ -113,6 +113,8 @@ public class Project_Page extends BasePage
 	@FindBy(xpath="//div[@class='banner orange']") WebElement qbxerobanner;
 	@FindBy(xpath="(//div[contains (text(),'Ajai DND')])[1]") WebElement ajay;
 	@FindBy(xpath="(//label[contains (text(),'Add Time Entry')])[1]") WebElement TEtitle;
+	@FindBy(xpath="(//textarea[@placeholder='Notes'])[1]") WebElement notes;
+	
 	
 	
 	
@@ -430,6 +432,7 @@ public class Project_Page extends BasePage
 			laborhour.clear();
 			Thread.sleep(1000);
 			laborhour.sendKeys("1");
+			act.doubleClick(notes);
 			/*timeentrycalender.click();
 			date16.click();
 			caldone.click();*/
