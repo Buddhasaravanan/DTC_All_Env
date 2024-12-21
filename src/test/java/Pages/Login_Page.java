@@ -59,13 +59,13 @@ public class Login_Page extends BasePage {
 	
 	public void choosecompany()
 	{
-		WebElement url = mfatext;
-		String text = url.getText();
 		
 		try 
 		{
-			if(text.equals("Secure your account using MFA"))
-			{
+			String currenturl = Base.getdriver().getCurrentUrl();
+			
+			if(currenturl.startsWith("dev"))
+			{				
 				mfa.click();
 				Thread.sleep(2000);
 				devcompany.click();
