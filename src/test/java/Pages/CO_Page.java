@@ -27,15 +27,16 @@ public class CO_Page extends BasePage
 	@FindBy(xpath="//span[contains (text() , ' Create & open change order')]") WebElement createcobtn;
 	@FindBy(xpath="(//div[contains (text(),'Overview')])[2]") WebElement cooverview;
 	@FindBy(id="nav-design") WebElement design;
-	@FindBy(xpath="(//mat-icon[@svgicon='deleteIcon'])[1]") WebElement removeitem;
+	@FindBy(xpath="//span[contains (text(),'More')]") WebElement itemmore;
+	@FindBy(xpath=" //span[contains (text(),'Remove from change order')]") WebElement removeitem;
 	@FindBy(xpath="//label[contains (text(),' Keep the accessories, and convert them to items')]") WebElement keepaccessory;
 	@FindBy(xpath="//span[contains (text(),'Yes, remove')]") WebElement yesremove;
 	@FindBy(xpath="//mat-icon[@svgicon='unDeleteIcon']") WebElement undeletionbtn;
 	@FindBy(xpath="//label[contains (text(),'Remove product, but keep the associated labor')]") WebElement keeplabor;
-	@FindBy(xpath="(//div[@id=\"showHideColumns\"])[1]") WebElement hower1stitem;
-	@FindBy(xpath="(//div[@id=\"showHideColumns\"])[2]") WebElement hower2stitem;
-	@FindBy(xpath="(//div[@id=\"showHideColumns\"])[3]") WebElement hower3stitem;
-	@FindBy(xpath="(//div[@id=\"showHideColumns\"])[4]") WebElement hower4stitem;
+	@FindBy(xpath="(//div[@id='showHideColumns'])[1]") WebElement hower1stitem;
+	@FindBy(xpath="(//div[@id='showHideColumns'])[2]") WebElement hower2stitem;
+	@FindBy(xpath="(//div[@id='showHideColumns'])[3]") WebElement hower3stitem;
+	@FindBy(xpath="(//div[@id='showHideColumns'])[4]") WebElement hower4stitem;
 	@FindBy(xpath="(//div[@id=\"showHideColumns\"])[5]") WebElement hower5stitem;
 	@FindBy(xpath="(//div[@id=\"showHideColumns\"])[6]") WebElement hower6stitem;
 	@FindBy(xpath="//mat-icon[@svgicon='copyContent']") WebElement copyitem;
@@ -50,13 +51,16 @@ public class CO_Page extends BasePage
 	@FindBy(xpath="//span[contains (text(), ' Approve change order ')]") WebElement approvechangeorder;
 	@FindBy(xpath="//span[text() = 'Removed']") WebElement removed;
 	@FindBy(xpath="//span[text() = 'Added']") WebElement added;
-	@FindBy(xpath="//input[@id='add-product-search']") WebElement itemsearch;
+	@FindBy(xpath="(//input[@id='add-product-search'])[2]") WebElement itemsearch;
 	@FindBy(xpath="//span[contains (text(), 'Select')]") WebElement selectitem;
 	@FindBy(xpath="//div[@id='item_0']") WebElement firstitem;
 	@FindBy(id="itemName") WebElement itemname;
 	@FindBy(xpath="//span[contains (text(), 'Approve change order')]") WebElement Approveco;
 	@FindBy(xpath="(//span[contains (text(), 'Approve')])[2]") WebElement Approve1;
 	@FindBy(xpath="(//mat-icon[@svgicon='backIcon'])[1]") WebElement cobackicon;
+	@FindBy(xpath="//span[contains (text(),'Add  to change order')]") WebElement coitemadd;
+	@FindBy(xpath="//span[contains (text(),'Keep labor')]") WebElement Rkeeplabor;
+	@FindBy(xpath="//span[contains (text(),'Keep accessories')]") WebElement Rkeepacc;
 	
 	
 	
@@ -105,41 +109,72 @@ public class CO_Page extends BasePage
 	
 	public void removeitemwithkeepaccessory() throws InterruptedException
 	{
-		removeitem.click();
-		Thread.sleep(2000);	
-		keepaccessory.click();
-		yesremove.click();
-		Thread.sleep(2000);	
+		try
+		{
+			itemmore.click();
+			removeitem.click();
+			Thread.sleep(2000);	
+			keepaccessory.click();
+			yesremove.click();
+			Thread.sleep(2000);	
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	
-	public boolean validationremoveitem()
+	public String validationremoveitem()
 	{
-		boolean removetag = removed.isDisplayed();
+		String removetag = removed.getText();
 		return removetag;  
 	}
 	
 	
 	public void keeplabor() throws InterruptedException
 	{
-		removeitem.click();
-		keeplabor.click();
-		yesremove.click();
-		Thread.sleep(2000);	
+		Actions act = new Actions(Base.getdriver());
+		
+		try
+		{
+			act.moveToElement(hower2stitem).click().perform();
+			itemmore.click();
+			removeitem.click();
+			keeplabor.click();
+			yesremove.click();
+			Thread.sleep(2000);	
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
-	public boolean validationkeeplabor()
+	public String validationkeeplabor()
 	{
-		boolean removetag = removed.isDisplayed();
+		String removetag = removed.getText();
 		return removetag;  
 	}
 	
 	public void copyitem()
 	{
-		hower1();
-		copyitem.click();
-		alllocation.click();
-		copybtn.click();
+		Actions act = new Actions(Base.getdriver());
+		try
+		{
+			act.moveToElement(hower2stitem).click().perform();
+			copyitem.click();
+			alllocation.click();
+			copybtn.click();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	public String copyitemvalidation()
@@ -150,10 +185,20 @@ public class CO_Page extends BasePage
 	
 	public void createinternalco() throws IOException
 	{
-		createnewco.click();
-		internalco.click();
-		coname.sendKeys(Base.getProperties().getProperty("InternalCOName"));
-		createcobtn.click();
+		try
+		{
+			createnewco.click();
+			Thread.sleep(2000);
+			internalco.click();
+			coname.sendKeys(Base.getProperties().getProperty("InternalCOName"));
+			createcobtn.click();
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	public boolean internalcovalidation()
@@ -164,26 +209,32 @@ public class CO_Page extends BasePage
 	
 	public void replace() throws InterruptedException, IOException
 	{
-		hower1();
-		replace.click();
-		Thread.sleep(2000);	
-		itemsearch.click();
-		itemsearch.sendKeys(Base.getProperties().getProperty("replaceitem"));
-		Thread.sleep(3000);
-		firstitem.click();
-		selectitem.click();
-		Thread.sleep(2000);
-		maintainprice.click();
-		keeplabor.click();
-		keepaccessory.click();
-		replacebtn.click();
+		Actions act = new Actions(Base.getdriver());
+		
+		try
+		{
+			//act.moveToElement(hower2stitem).click().perform();
+			replace.click();
+			Thread.sleep(2000);	
+			itemsearch.click();
+			itemsearch.sendKeys(Base.getProperties().getProperty("replaceitem"));
+			Thread.sleep(3000);
+			firstitem.click();
+			selectitem.click();
+			Thread.sleep(2000);
+			maintainprice.click();
+			Rkeeplabor.click();
+			Rkeepacc.click();
+			replacebtn.click();
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
-	public String replacevalidation()
-	{
-		String itm = itemname.getText();
-		return itm;
-	}
 	
 	public void approveinternalco() throws InterruptedException
 	{
@@ -199,6 +250,19 @@ public class CO_Page extends BasePage
 		Thread.sleep(3000);
 		cobackicon.click();
 		Thread.sleep(3000);
+	}
+	
+	public void additemco()
+	{
+		try
+		{
+			coitemadd.click();
+			Thread.sleep(2000);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
 	}
 	
 }

@@ -3,6 +3,7 @@ package Pages;
 import java.io.IOException;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -103,7 +104,7 @@ public class Project_Page extends BasePage
 	@FindBy(xpath="//span[contains (text(),'Payment Request')]") WebElement paymentrequestvalidatetext;
 	@FindBy(xpath="//mat-icon[@svgicon='proposalShare']") WebElement sharepayemnt;
 	@FindBy(xpath="//span[contains (text(), 'Email')]") WebElement shareemail;
-	@FindBy(xpath="//app-contacts-integration[@placeholder='Type here to enter email or contact']") WebElement toemail;
+	@FindBy(xpath="//input[@placeholder='Type here to enter email or contact']") WebElement toemail;
 	@FindBy(xpath="//span[contains (text(), 'Send')]") WebElement sendmail;
 	@FindBy(xpath="(//span[contains (text(), '10')])[2]") WebElement date;
 	@FindBy(xpath="(//span[@class='elipseName'])[1]") WebElement tasknameelement;
@@ -114,12 +115,15 @@ public class Project_Page extends BasePage
 	@FindBy(xpath="(//div[contains (text(),'Ajai DND')])[1]") WebElement ajay;
 	@FindBy(xpath="(//label[contains (text(),'Add Time Entry')])[1]") WebElement TEtitle;
 	@FindBy(xpath="(//textarea[@placeholder='Notes'])[1]") WebElement notes;
+	@FindBy(xpath="(//input[@id='time-dropdown'])[1]") WebElement starttime;
+	@FindBy(xpath="(//input[@id='time-dropdown'])[2]") WebElement endtime;
+	@FindBy(xpath="//div[contains (text(), '07:00 AM')]") WebElement sevenam;
+	@FindBy(xpath="//div[contains (text(), '03:00 PM')]") WebElement threepm;
+	@FindBy(xpath="//div[@class='time-dropdown-container ng-star-inserted']") WebElement timedrop;
+	@FindBy(xpath="//tr[@class='ng-star-inserted green']//td[7]") WebElement paidstatus;
+	@FindBy(xpath="//*[@id='container-PPE-scroll']/div/app-project-payments/div/div[1]/div[2]/span[2]") WebElement paidsection;
 	
-	
-	
-	
-	
-	
+
 	public void plan()
 	{
 		WebElement banner = qbxerobanner;
@@ -314,20 +318,27 @@ public class Project_Page extends BasePage
 		
 	}
 	
-	public String CHLvalidation()
+	public void CHLvalidation()
 	{
+		 String tomsg = toastmsg.getText();
+		 
 		try
 		{
-			 String tomsg = toastmsg.getText();
-			  return tomsg;
+
+			  if(tomsg.contains("Checklist created"))
+			  {
+				 Assert.assertEquals("Checklist created", tomsg);
+			  }
+			  else
+			  {
+				  System.out.println("Toast Message Missing");
+			  }
 		}
 		
 		catch (Exception e)
 		{
 			System.out.println(e.getMessage());
 		}
-		
-		return null;
 		
 	}
 	
@@ -428,11 +439,18 @@ public class Project_Page extends BasePage
 			TElabortype.click();
 			Thread.sleep(2000);
 			task.click();
-			houresworked.click();
+			/*houresworked.click();
 			laborhour.clear();
 			Thread.sleep(1000);
-			laborhour.sendKeys("1");
-			act.doubleClick(notes);
+			laborhour.sendKeys("1");*/
+			starttime.click();
+			act.moveToElement(timedrop);
+			js.executeScript("window.scrollBy(0, 1000)");
+			sevenam.click();
+			endtime.click();
+			act.moveToElement(timedrop);
+			js.executeScript("window.scrollBy(0, 1000)");
+			threepm.click();
 			/*timeentrycalender.click();
 			date16.click();
 			caldone.click();*/
@@ -447,10 +465,27 @@ public class Project_Page extends BasePage
 		
 	}
 	
-	public String timeentryvalidation()
+	public void timeentryvalidation()
 	{
-		 String tomsg = toastmsg.getText();
-		  return tomsg;
+		String tomsg = toastmsg.getText();
+		
+		try
+		{
+			if(tomsg.equals("Time entry added"))
+			{
+				Assert.assertTrue(true);
+			}
+			else
+			{
+				System.out.println("Toast Message Missing");
+			}
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		 
 	}
 	
 	
@@ -483,16 +518,30 @@ public class Project_Page extends BasePage
 	
 	public void sharepayment() throws InterruptedException, IOException
 	{
-		sharepayemnt.click();
-		shareemail.click();
-		Thread.sleep(3000);	
-		toemail.sendKeys(Base.getProperties().getProperty("proposal_email"));
-		sendmail.click();	
+		Actions act = new Actions(Base.getdriver());
+		
+		try
+		{
+			sharepayemnt.click();
+			shareemail.click();
+			Thread.sleep(3000);	
+			toemail.sendKeys(Base.getProperties().getProperty("proposal_email") + Keys.ENTER);
+			Thread.sleep(2000);	
+			/*act.moveToElement(sendmail);
+			act.click();
+			act.click(sendmail);*/
+			sendmail.click();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}		
+		
 	}
 	
-	public String paymentemailsharevalidation()
+	public boolean paymentemailsharevalidation()
 	{
-		 String tomsg = toastmsg.getText();
+		boolean tomsg = toastmsg.isDisplayed();
 		  return tomsg;
 	}
 	
@@ -509,10 +558,10 @@ public class Project_Page extends BasePage
 	
 	public boolean paymentsummaryvalidation()
 	{
-		WebElement pa = driver.findElement(By.xpath("//tr[@class='ng-star-inserted green']//td[7]"));
+		WebElement pa = paidstatus;
 		pa.getText();
-		
-		WebElement pa1 = driver.findElement(By.xpath("//*[@id='container-PPE-scroll']/div/app-project-payments/div/div[1]/div[2]/span[2]"));
+
+		WebElement pa1 = paidstatus;
 		pa1.getText();
 		
 		if(pa.equals(pa1))

@@ -6,7 +6,7 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features= {".//FeatureFile/SmokeTest/001_Login.feature", ".//FeatureFile/SmokeTest/002_Create_opportunity.feature", ".//FeatureFile/SmokeTest/003_Qoute_and_Proposal.feature", ".//FeatureFile/SmokeTest/004_Project.feature"},
+@CucumberOptions(features= {".//FeatureFile/SmokeTest/001_Login.feature", ".//FeatureFile/SmokeTest/002_Create_opportunity.feature", ".//FeatureFile/SmokeTest/003_Qoute_and_Proposal.feature", ".//FeatureFile/SmokeTest/004_Project.feature", ".//FeatureFile/SmokeTest/005_Change_Orders.feature"},
 				  //features= {".//FeatureFile/SmokeTest/"},
 				 //features= {".//FeatureFile/001_Login.feature"},
 				 //features= {".//FeatureFile/Createnewopp.feature"},

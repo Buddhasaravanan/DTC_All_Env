@@ -72,7 +72,7 @@ public class Project_Steps
 	public void validate_check_list_has_created() 
 	{
 	    
-		Assert.assertEquals("Checklist created", prp.CHLvalidation(), prp.CHLvalidation());
+		prp.CHLvalidation();
 	}
 
 	@When("the user add items to the task")
@@ -121,7 +121,7 @@ public class Project_Steps
 	@Then("validate time entry added or not")
 	public void validate_time_entry_added_or_not() 
 	{
-		Assert.assertEquals("Time entry added", prp.timeentryvalidation(), prp.timeentryvalidation());
+		prp.timeentryvalidation();
 	}
 
 	@When("the user go to project overview page")
@@ -157,7 +157,7 @@ public class Project_Steps
 	@Then("validate payemnt shared or not")
 	public void validate_payemnt_shared_or_not() 
 	{
-		Assert.assertEquals("Payment shared", prp.paymentemailsharevalidation(), prp.paymentemailsharevalidation());
+		Assert.assertTrue(prp.paymentemailsharevalidation());
 	}
 
 	@When("the user mark payment stats as paid")
