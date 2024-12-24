@@ -47,7 +47,7 @@ public class CO_Page extends BasePage
 	@FindBy(xpath="//span[contains (text(), 'Keep labor')]") WebElement replacekeeplabor;
 	@FindBy(xpath="//span[contains (text(), 'Keep accessories')]") WebElement replacekeppaccossory;
 	@FindBy(id="btn-replace") WebElement replacebtn;
-	@FindBy(xpath="//div[contains (text(), 'Internal')]") WebElement internalco;
+	@FindBy(xpath="(//div[@class='secondary-text'])[2]") WebElement internalco;
 	@FindBy(xpath="//span[contains (text(), ' Approve change order ')]") WebElement approvechangeorder;
 	@FindBy(xpath="//span[text() = 'Removed']") WebElement removed;
 	@FindBy(xpath="//span[text() = 'Added']") WebElement added;
@@ -185,10 +185,13 @@ public class CO_Page extends BasePage
 	
 	public void createinternalco() throws IOException
 	{
+		Actions act = new Actions(Base.getdriver());
+		
 		try
 		{
 			createnewco.click();
 			Thread.sleep(2000);
+			//act.moveToElement(internalco).click().perform();
 			internalco.click();
 			coname.sendKeys(Base.getProperties().getProperty("InternalCOName"));
 			createcobtn.click();
