@@ -8,13 +8,12 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
-
+import factory.Base;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Scenario;
 
 public class Hooks 
 {
-	WebDriver driver;
 	Properties p;
 	
 	@Before
@@ -30,8 +29,8 @@ public class Hooks
 	
     @AfterStep
 	public void addscreenshot(Scenario scenario) {
-	    if (scenario.isFailed() && driver != null) {
-	        TakesScreenshot ts = (TakesScreenshot) driver;
+	    if (scenario.isFailed() && Base.getdriver() != null) {
+	        TakesScreenshot ts = (TakesScreenshot) Base.getdriver();
 	        byte[] screenshot = ts.getScreenshotAs(OutputType.BYTES);
 	        scenario.attach(screenshot, "image/png", scenario.getName());
 	    }

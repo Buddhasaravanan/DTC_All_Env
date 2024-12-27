@@ -9,6 +9,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import factory.Base;
@@ -83,7 +84,12 @@ public class ServiceCall_Page extends BasePage
 	@FindBy(xpath="//mat-icon[@svgicon=\"backIcon\"]") WebElement backicon;
 	@FindBy(xpath="//*[@id=\"dtCloudApp\"]/app-root/mat-sidenav-container/mat-sidenav-content/mat-drawer-container/mat-drawer-content/main/span/span/app-service/app-service-call-detail/div/div[3]/div/div/div/div[3]/div/div[4]/div[2]") WebElement labortotal;
 	
-	
+	@FindBy(xpath="(//input[@id='time-dropdown'])[1]") WebElement starttime;
+	@FindBy(xpath="(//input[@id='time-dropdown'])[2]") WebElement endtime;
+	@FindBy(xpath="//div[contains (text(), '07:00 AM')]") WebElement sevenam;
+	@FindBy(xpath="//div[contains (text(), '03:00 PM')]") WebElement threepm;
+	@FindBy(xpath="//div[@class='time-dropdown-container ng-star-inserted']") WebElement timedrop;
+	@FindBy(xpath="(//div[@role='option'])[2]") WebElement task;
 	
 	
 		public void servicecallpage() throws InterruptedException
@@ -399,8 +405,26 @@ public class ServiceCall_Page extends BasePage
 	
 	public void timeenrtry()
 	{
+		JavascriptExecutor js = (JavascriptExecutor) Base.getdriver();
+		Actions act = new Actions(Base.getdriver());
+		
 		try
 		{
+			SCtimeentry.click();
+			Thread.sleep(2000);
+			starttime.click();
+			act.moveToElement(timedrop);
+			js.executeScript("window.scrollBy(0, 1000)");
+			sevenam.click();
+			endtime.click();
+			act.moveToElement(timedrop);
+			js.executeScript("window.scrollBy(0, 1000)");
+			threepm.click();
+			TElabortype.click();
+			Thread.sleep(2000);
+			task.click();
+			timenetryadd.click();
+			Thread.sleep(2000);
 			
 		}
 		

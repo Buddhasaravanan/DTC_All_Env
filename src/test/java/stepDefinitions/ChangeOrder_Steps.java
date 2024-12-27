@@ -144,6 +144,9 @@ public class ChangeOrder_Steps
 	@When("user select internal co and giving a name")
 	public void user_select_internal_co_and_giving_a_name() throws IOException 
 	{
+		cop.createnewchangeorder();
+	    cop.nameofco();
+	    cop.openco();
 	    cop.createinternalco();
 	}
 

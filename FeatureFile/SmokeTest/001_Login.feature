@@ -1,5 +1,5 @@
 Feature: Login Test
-  I want to use this template for my feature file
+ 
 
   @Sanity
   Scenario: Login with valid login credentials
