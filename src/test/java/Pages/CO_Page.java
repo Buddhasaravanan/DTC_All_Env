@@ -2,6 +2,7 @@ package Pages;
 
 import java.io.IOException;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -65,6 +66,14 @@ public class CO_Page extends BasePage
 	@FindBy(xpath="//div[contains (text(), 'Internal')]") WebElement internalco;
 	@FindBy(xpath="(//mat-icon[@svgicon='closeIcon'])[3]") WebElement closeicon;
 	@FindBy(id="createChangeOrderForm") WebElement newchangeorderform;
+	@FindBy(xpath="//div[@class='back-arrow']") WebElement backarrow;
+	@FindBy(id="app-nav-project-change-orders") WebElement lichangeorder;
+	@FindBy(xpath="//span[contains (text(), 'New change order')]") WebElement newco1;
+	@FindBy(xpath="//mat-radio-button[@class='mat-mdc-radio-button mat-accent']") WebElement internalco1;
+	@FindBy(xpath="//ng-select[@placeholder='Select project']") WebElement selectproject;
+	
+	
+	
 	
 	
 	
@@ -178,10 +187,27 @@ public class CO_Page extends BasePage
 		
 	}
 	
-	public String copyitemvalidation()
+	public void copyitemvalidation()
 	{
-		String toast = toastmsg.getText();
-		return toast;	
+		String tomsg = toastmsg.getText();
+		
+		try
+		{
+			if(tomsg.equals("Items copied to locations"))
+			{
+				Assert.assertTrue(true);
+			}
+			else
+			{
+				Assert.assertTrue(false);
+				System.out.println("Toast Message Missing");
+			}
+			
+	}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void createinternalco() throws IOException
@@ -190,17 +216,29 @@ public class CO_Page extends BasePage
 		
 		try
 		{
-			/*createnewco.click();
+			/*backarrow.click();
 			Thread.sleep(2000);
-			act.moveToElement(internalco).click().perform();
+			lichangeorder.click();
+			Thread.sleep(2000);
+			newco1.click();
+			Thread.sleep(2000);
+			internalco1.click();
+			coname.sendKeys(Base.getProperties().getProperty("InternalCOName"));
+			selectproject.click();
+			Thread.sleep(2000);
+			Base.Enter();
+			createcobtn.click();*/
+			createnewco.click();
+			Thread.sleep(2000);
+			//act.moveToElement(internalco).click().perform();
 			internalco.click();
 			coname.sendKeys(Base.getProperties().getProperty("InternalCOName"));
 			createcobtn.click();
-			Thread.sleep(2000);*/
-			cosettings.click();
+			Thread.sleep(2000);
+			/*cosettings.click();
 			Thread.sleep(2000);
 			internalco.click();
-			closeicon.click();
+			closeicon.click();*/
 		}
 		
 		catch (Exception e)
@@ -273,6 +311,31 @@ public class CO_Page extends BasePage
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void coitemvalidation()
+	{
+		
+	
+	String tomsg = toastmsg.getText();
+	
+	try
+	{
+		if(tomsg.equals("Item added"))
+		{
+			Assert.assertTrue(true);
+		}
+		else
+		{
+			Assert.assertTrue(false);
+			System.out.println("Toast Message Missing");
+		}
+		
+}
+	catch (Exception e)
+	{
+		System.out.println(e.getMessage());
+	}
+}
 	
 }
 

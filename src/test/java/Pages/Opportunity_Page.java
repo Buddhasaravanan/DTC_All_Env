@@ -49,7 +49,7 @@ Date d=new Date();
 	//@FindBy(xpath="//div[@aria-expanded='true']")  WebElement quotetype;
 	@FindBy(xpath="//ng-select[@id=\"quoteType\"]")  WebElement quotetype;
 	@FindBy(xpath="//span[contains (text(), 'Bid/Spec')]")  WebElement bid;
-	@FindBy(xpath="//button[contains (text(), 'OK')]")  WebElement cacshpopup;
+	
 	
 	
 	
@@ -58,7 +58,6 @@ Date d=new Date();
 	{
 		try 
 		{
-			cacshpopup.click();
 			opportunities.click();
 			
 		}

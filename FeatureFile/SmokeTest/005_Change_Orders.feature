@@ -21,9 +21,9 @@ Feature: Change Orders
     Then Validate proposal created
     When user accept the change order
     Then Validate accepted CO
-    When user click new change order button
-    And user select internal co and giving a name
-    And user click create and open change order
+    #When user click new change order button
+    When user select internal co and giving a name
+    #And user click create and open change order
     Then Validate new internal CO created
     And user add item
     Then Validate item added to CO

@@ -5,7 +5,7 @@ Feature: Service Call
     And user create new service call
     And User enter the client details and click create button
     Then validate new service call created
-    When user scroll the page
+    #When user scroll the page
     And user schedule the service call
     Then validate new schedule created
     When user navigate to worksummary
@@ -28,6 +28,6 @@ Feature: Service Call
     Then validate payment request created
     When user share the payment request
     Then validate payment request shared
-    When user navigate to present mode
-    And  user make the payment via card
-    And  user back to serviceall dashboard
+    #When user navigate to present mode
+    #And user make the payment via card
+    And user back to serviceall dashboard

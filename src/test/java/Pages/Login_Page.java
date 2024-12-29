@@ -42,6 +42,8 @@ public class Login_Page extends BasePage {
 	@FindBy(id="reenterPassword") WebElement repassword;
 	@FindBy(id="btnNext") WebElement continuebtn;
 	
+	@FindBy(xpath="//button[contains (text(), 'OK')]")  WebElement cacshpopup;
+	
 	
 	
 	
@@ -87,7 +89,8 @@ public class Login_Page extends BasePage {
 	
 	public void popupclose()
 	{
-		popup.click();
+		cacshpopup.click();
+		//popup.click();
 	}
 	
 	public boolean logintitle()

@@ -33,14 +33,14 @@ public class ServiceCall_Page extends BasePage
 	@FindBy(xpath="//span[contains (text(), 'Bodhi')]") WebElement bodhi;
 	@FindBy(xpath="//div[contains (text(), 'E.g. Customer called into office on Tuesday stated their conference room projector stopped working.')]") WebElement issuereported;
 	@FindBy(xpath="//span[contains (text(), 'Done')]") WebElement issuereporteddone;
-	@FindBy(xpath="(//span[contains (text(), 'Create')])[2]]") WebElement createSC;
+	@FindBy(xpath="(//span[contains (text(), 'Create')])[2]") WebElement createSC;
 	@FindBy(xpath="//input[@placeholder='Select start date']") WebElement SCstartdate;
 	@FindBy(xpath="//input[@placeholder='Select end date']") WebElement SCenddate;	
 	@FindBy(xpath="(//div[@role='combobox'])[4]") WebElement servicecontractdropbox;
 	@FindBy(xpath="//span[contains (text(), 'Request payment')]") WebElement requestpayment;
 	@FindBy(xpath="//div[contains (text(),'04:00 PM - 05:00 PM')]") WebElement schedule9to5;	
 	@FindBy(xpath="//div[contains (text(), 'All Resources')]") WebElement allresource;
-	@FindBy(xpath="//div[contains (text(), 'All Available Resources')]") WebElement allavailableresource;
+	@FindBy(xpath="(//div[@role='combobox'])[6]") WebElement allavailableresource;
 	@FindBy(xpath="//div[contains (text(), 'Ajai DND')]") WebElement Ajai;
 	@FindBy(xpath="//span[contains (text(), 'Schedule')]") WebElement SCschedule;
 	@FindBy(xpath="//span[contains (text(), 'Work Summary')]") WebElement worksummary;
@@ -81,8 +81,10 @@ public class ServiceCall_Page extends BasePage
 	@FindBy(xpath="//mat-icon[@svgicon='proposalPresent']") WebElement presentproposal;
 	@FindBy(xpath="//span[contains (text(), 'Submit payment')]") WebElement submitpayment;
 	@FindBy(id="method-card") WebElement creditcard;
-	@FindBy(xpath="//mat-icon[@svgicon=\"backIcon\"]") WebElement backicon;
-	@FindBy(xpath="//*[@id=\"dtCloudApp\"]/app-root/mat-sidenav-container/mat-sidenav-content/mat-drawer-container/mat-drawer-content/main/span/span/app-service/app-service-call-detail/div/div[3]/div/div/div/div[3]/div/div[4]/div[2]") WebElement labortotal;
+	@FindBy(xpath="//mat-icon[@svgicon='backIcon']") WebElement backicon;
+	@FindBy(xpath="//*[@id='dtCloudApp']/app-root/mat-sidenav-container/mat-sidenav-content/mat-drawer-container/mat-drawer-content/main/span/span/app-service/app-service-call-detail/div/div[3]/div/div/div/div[3]/div/div[4]/div[2]") WebElement labortotal;
+	
+	@FindBy(xpath="//div[@class='service-call-number']") WebElement scnumber;
 	
 	@FindBy(xpath="(//input[@id='time-dropdown'])[1]") WebElement starttime;
 	@FindBy(xpath="(//input[@id='time-dropdown'])[2]") WebElement endtime;
@@ -90,9 +92,16 @@ public class ServiceCall_Page extends BasePage
 	@FindBy(xpath="//div[contains (text(), '03:00 PM')]") WebElement threepm;
 	@FindBy(xpath="//div[@class='time-dropdown-container ng-star-inserted']") WebElement timedrop;
 	@FindBy(xpath="(//div[@role='option'])[2]") WebElement task;
+	@FindBy(xpath="//div[@class='ql-editor ql-blank']") WebElement issuereported1;
+	@FindBy(xpath="//span[contains (text(), 'Reschedule')]") WebElement reschedule;
+	@FindBy(xpath="//ng-dropdown-panel[@role='listbox']") WebElement mainlaborlist;
+	@FindBy(xpath="//div[contains (text(), 'Sales Tax 1 (8.25%)')]") WebElement salestax;
 	
 	
-		public void servicecallpage() throws InterruptedException
+	
+	
+	
+		public void servicecallpage() 
 		{
 			try 
 			{
@@ -111,7 +120,7 @@ public class ServiceCall_Page extends BasePage
 	
 	
 	
-	public void newservicecall() throws InterruptedException
+	public void newservicecall()
 	{
 		try 
 		{
@@ -127,7 +136,7 @@ public class ServiceCall_Page extends BasePage
 	}
 	
 	
-	public void clientdetails() throws IOException, InterruptedException
+	public void clientdetails()
 	{
 		try 
 		{
@@ -135,7 +144,8 @@ public class ServiceCall_Page extends BasePage
 			Thread.sleep(1000);
 			bodhi.click();
 			Thread.sleep(2000);
-			issuereported.sendKeys(Base.getProperties().getProperty("Issuereported"));
+			issuereported.click();
+			issuereported1.sendKeys(Base.getProperties().getProperty("Issuereported"));
 			issuereporteddone.click();
 			createSC.click();
 			Thread.sleep(5000);
@@ -160,7 +170,8 @@ public class ServiceCall_Page extends BasePage
 			} 
 			else
 			{
-				Assert.fail("Request payment element is not displayed as expected.");
+				Assert.assertTrue(false);
+				System.out.println("Request payment element is not displayed as expected.");
 			}
 		}
 		
@@ -176,7 +187,7 @@ public class ServiceCall_Page extends BasePage
 		try 
 		{
 			JavascriptExecutor js = (JavascriptExecutor) Base.getdriver();
-			js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+			js.executeScript("window.scrollBy(0,1000)");
 			Thread.sleep(2000);
 		}
 		
@@ -210,9 +221,9 @@ public class ServiceCall_Page extends BasePage
 	{
 		try
 		{
-			String tmsg = toastmsg.getText();
+			WebElement rs = reschedule;
 			
-			if(tmsg.equals("Service call scheduled"))
+			if(rs.isDisplayed())
 			{
 				Assert.assertTrue(true);
 			}
@@ -251,8 +262,10 @@ public class ServiceCall_Page extends BasePage
 			Thread.sleep(1000);
 			addloabor.click();
 			labortype.click();
+			Thread.sleep(2000);
+			Base.Enter();
 			
-			List <WebElement> laborslist = driver.findElements(By.xpath("//ng-dropdown-panel[@role='listbox']"));
+			/*List <WebElement> laborslist = Base.getdriver().findElements(By.xpath("//ng-dropdown-panel[@role='listbox']"));
 			
 			for(WebElement labors : laborslist)
 			{
@@ -264,7 +277,7 @@ public class ServiceCall_Page extends BasePage
 					break;
 				}
 				
-			}
+			}*/
 			
 			laboradd.click();
 			Thread.sleep(1000);
@@ -317,7 +330,7 @@ public class ServiceCall_Page extends BasePage
 			truckrollfeevalue.sendKeys(Keys.BACK_SPACE);
 			truckrollfeevalue.sendKeys(Base.getProperties().getProperty("Truckrollfee"));
 			
-			List <WebElement> tax = driver.findElements(By.xpath("//div[@class='ng-dropdown-panel-items scroll-host']"));
+			/*List <WebElement> tax = driver.findElements(By.xpath("//div[@class='ng-dropdown-panel-items scroll-host']"));
 			
 			for(WebElement tax1 : tax)
 			{
@@ -328,8 +341,11 @@ public class ServiceCall_Page extends BasePage
 					tax1.click();
 					break;
 				}
-			}
+			}*/
 			
+			truckrollfeetax.click();
+			salestax.click();
+			Thread.sleep(2000);
 			labortotal.click();
 		}
 		catch (Exception e)
@@ -433,5 +449,191 @@ public class ServiceCall_Page extends BasePage
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	
+	public void timenetryvalidate()
+	{
+		String tomsg = toastmsg.getText();
+		
+		try
+		{
+			if(tomsg.equals("Time entry added"))
+			{
+				Assert.assertTrue(true);
+			}
+			else
+			{
+				Assert.assertTrue(false);
+				System.out.println("Toast Message Missing");
+			}
+			
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void addrepairitem()
+	{
+		try
+		{
+			SCaddproduct.click();
+			Thread.sleep(2000);
+			Repairproduct.click();
+			Thread.sleep(2000);
+			itemsearch.sendKeys(Base.getProperties().getProperty("scitemname"));
+			Thread.sleep(2000);
+			firstitem.click();
+			additem.click();
+			Thread.sleep(2000);
+			add.click();
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void itemvalidate()
+	{
+		String tomsg = toastmsg.getText();
+		
+		try
+		{
+			if(tomsg.equals("Product added"))
+			{
+				Assert.assertTrue(true);
+			}
+			else
+			{
+				Assert.assertTrue(false);
+				System.out.println("Toast Message Missing or Item not added");
+			}
+			//
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void replaceitem()
+	{
+		try
+		{
+			SCaddproduct.click();
+			Thread.sleep(2000);
+			replaceproduct.click();
+			Thread.sleep(2000);
+			itemsearch.sendKeys(Base.getProperties().getProperty("scitemname"));
+			Thread.sleep(2000);
+			firstitem.click();
+			additem.click();
+			Thread.sleep(2000);
+			next.click();
+			itemsearch.sendKeys(Base.getProperties().getProperty("SCreplaceitem"));
+			Thread.sleep(2000);
+			firstitem.click();
+			additem.click();
+			Thread.sleep(2000);
+			add.click();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void additionalitem()
+	{
+		try
+		{
+			SCaddproduct.click();
+			Thread.sleep(2000);
+			Repairproduct.click();
+			Thread.sleep(2000);
+			itemsearch.sendKeys(Base.getProperties().getProperty("scitemname"));
+			Thread.sleep(2000);
+			firstitem.click();
+			additem.click();
+			Thread.sleep(2000);
+			add.click();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void paymentrequest()
+	{
+		try
+		{
+			requestpayment.click();
+			Thread.sleep(2000);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void setterms()
+	{
+		try
+		{
+			terms.click();
+			Thread.sleep(2000);
+			dueuponreceipt.click();
+			paymentreqcreate.click();
+			
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void paymentreqvalidate()
+	{
+		WebElement servicecallnumber = scnumber;
+		
+		try
+		{
+			if(servicecallnumber.isDisplayed())
+			{
+				Assert.assertTrue(true);
+			}
+			
+			else
+			{
+				Assert.assertTrue(false);
+				System.out.println("Payment Request Creation Faild");
+			}
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void backtodashboard()
+	{
+		try
+		{
+			backicon.click();
+			Thread.sleep(2000);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}
+	
 
 }

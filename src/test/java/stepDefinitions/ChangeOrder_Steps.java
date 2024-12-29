@@ -101,7 +101,7 @@ public class ChangeOrder_Steps
 	@Then("Validate copy item")
 	public void validate_copy_item() 
 	{
-		Assert.assertEquals(cop.copyitemvalidation(), "Items copied to locations");
+		cop.copyitemvalidation();
 	}
 
 	@When("user replace the item")
@@ -144,10 +144,8 @@ public class ChangeOrder_Steps
 	@When("user select internal co and giving a name")
 	public void user_select_internal_co_and_giving_a_name() throws IOException 
 	{
-		cop.createnewchangeorder();
-	    cop.nameofco();
-	    cop.openco();
 	    cop.createinternalco();
+	    
 	}
 
 	@Then("Validate new internal CO created")
@@ -159,14 +157,15 @@ public class ChangeOrder_Steps
 	@Then("user add item")
 	public void user_add_item() throws IOException, InterruptedException 
 	{
+		cop.designsection();
 		qp.serach_item();
-	    qp.add_item();
+	    cop.additemco();
 	}
 
 	@Then("Validate item added to CO")
 	public void validate_item_added_to_co() 
 	{
-		Assert.assertEquals(qp.itemvalidation(), "items added");
+		cop.coitemvalidation();
 	}
 
 	@When("user approve the internal CO")

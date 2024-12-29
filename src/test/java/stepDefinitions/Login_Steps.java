@@ -39,6 +39,7 @@ public class Login_Steps
 	{
 		Login_Page lp = new Login_Page(Base.getdriver());
 	    lp.choosecompany();
+	    lp.popupclose();
 	}
 
 	@Then("the user should navigate to dashboard page")
