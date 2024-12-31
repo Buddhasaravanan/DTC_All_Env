@@ -143,7 +143,7 @@ public class ServiceCall_Page extends BasePage
 			clientname.sendKeys(Base.getProperties().getProperty("Clientname"));
 			Thread.sleep(1000);
 			bodhi.click();
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 			issuereported.click();
 			issuereported1.sendKeys(Base.getProperties().getProperty("Issuereported"));
 			issuereporteddone.click();
@@ -259,11 +259,12 @@ public class ServiceCall_Page extends BasePage
 		try
 		{
 			labortime.click();
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			addloabor.click();
 			labortype.click();
+			Thread.sleep(5000);
+			
 			Thread.sleep(2000);
-			Base.Enter();
 			
 			/*List <WebElement> laborslist = Base.getdriver().findElements(By.xpath("//ng-dropdown-panel[@role='listbox']"));
 			
