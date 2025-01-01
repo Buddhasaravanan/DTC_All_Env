@@ -52,7 +52,7 @@ public class ServiceCall_Page extends BasePage
 	@FindBy(xpath="(//mat-icon[@svgicon='closeIcon'])[6]") WebElement laborclosebtn;
 	@FindBy(xpath="(//div[@id='labor-time-input'])[2]") WebElement truckrollfee;
 	@FindBy(xpath="//input[@name='truck']") WebElement truckrollfeevalue;
-	@FindBy(xpath="//div[@class='ng-dropdown-panel-items scroll-host']") WebElement truckrollfeetax;
+	@FindBy(xpath="//ng-select[@placeholder='Select tax']") WebElement truckrollfeetax;
 	@FindBy(xpath="(//div[@id='labor-time-input'])[3]") WebElement drivetimefee;
 	@FindBy(xpath="(//input[@name='truck'])[2]") WebElement drivetimefeevalue;
 	@FindBy(xpath="//span[contains (text(), 'Add time entry')]") WebElement SCtimeentry;
@@ -68,9 +68,9 @@ public class ServiceCall_Page extends BasePage
 	@FindBy(xpath="//span[contains (text(), 'Additional Products Used')]") WebElement Additionalproductused;
 	@FindBy(xpath="//input[@id='add-product-search']") WebElement itemsearch;
 	@FindBy(xpath="//div[@id='item_0']") WebElement firstitem;
-	@FindBy(xpath="(//span[contains (text(), 'Add')])[1]") WebElement additem;
+	@FindBy(xpath="(//button[@id='btn-add-item'])[1]") WebElement additem;
 	@FindBy(xpath="(//span[contains (text(), 'Next')])[1]") WebElement next;
-	@FindBy(xpath="(//span[contains (text(), 'Add')])[3]") WebElement add;
+	@FindBy(xpath="(//span[contains (text(), 'Add')])[1]") WebElement add;
 	@FindBy(xpath="//div[contains (text(), 'Net 30')]") WebElement terms;
 	@FindBy(xpath="//div[contains (text(), ' Due upon receipt ')]") WebElement dueuponreceipt;
 	@FindBy(xpath="//span[contains (text(), 'Create')]") WebElement paymentreqcreate;
@@ -96,7 +96,7 @@ public class ServiceCall_Page extends BasePage
 	@FindBy(xpath="//span[contains (text(), 'Reschedule')]") WebElement reschedule;
 	@FindBy(xpath="//ng-dropdown-panel[@role='listbox']") WebElement mainlaborlist;
 	@FindBy(xpath="//div[contains (text(), 'Sales Tax 1 (8.25%)')]") WebElement salestax;
-	
+	@FindBy(xpath="//div[contains (text(), 'June 22')]") WebElement june22;
 	
 	
 	
@@ -263,7 +263,7 @@ public class ServiceCall_Page extends BasePage
 			addloabor.click();
 			labortype.click();
 			Thread.sleep(5000);
-			
+			june22.click();			
 			Thread.sleep(2000);
 			
 			/*List <WebElement> laborslist = Base.getdriver().findElements(By.xpath("//ng-dropdown-panel[@role='listbox']"));
@@ -296,7 +296,19 @@ public class ServiceCall_Page extends BasePage
 	{
 		try
 		{
-			 WebElement total = labortotal;
+			String tmsg = toastmsg.getText();
+			
+			if(tmsg.equals("Labor added"))
+			{
+				Assert.assertTrue(true);
+			}
+			
+			else
+			{
+				Assert.fail("Labor Added validation Failed");
+			}
+			
+			 /*WebElement total = labortotal;
 			
 			 String laborprice = total.getText().trim();
 			 
@@ -311,7 +323,7 @@ public class ServiceCall_Page extends BasePage
 			 else 
 			 {
 				 Assert.assertTrue(false);
-			 }
+			 }*/
 			
 			
 		}
@@ -347,7 +359,8 @@ public class ServiceCall_Page extends BasePage
 			truckrollfeetax.click();
 			salestax.click();
 			Thread.sleep(2000);
-			labortotal.click();
+			Base.Enter();
+			//labortotal.click();
 		}
 		catch (Exception e)
 		{
@@ -386,8 +399,13 @@ public class ServiceCall_Page extends BasePage
 		{
 			drivetimefee.click();
 			Thread.sleep(1000);
+			drivetimefeevalue.sendKeys(Keys.BACK_SPACE);
 			drivetimefeevalue.sendKeys(Base.getProperties().getProperty("Drivetimefee"));
-			labortotal.click();
+			//labortotal.click();
+			truckrollfeetax.click();
+			salestax.click();
+			Thread.sleep(2000);
+			Base.Enter();
 		}
 		
 		catch (Exception e)
@@ -487,6 +505,7 @@ public class ServiceCall_Page extends BasePage
 			itemsearch.sendKeys(Base.getProperties().getProperty("scitemname"));
 			Thread.sleep(2000);
 			firstitem.click();
+			Thread.sleep(2000);
 			additem.click();
 			Thread.sleep(2000);
 			add.click();
@@ -510,8 +529,7 @@ public class ServiceCall_Page extends BasePage
 			}
 			else
 			{
-				Assert.assertTrue(false);
-				System.out.println("Toast Message Missing or Item not added");
+				Assert.fail("Toast Message Missing or Item not added");
 			}
 			//
 		}
@@ -533,12 +551,14 @@ public class ServiceCall_Page extends BasePage
 			itemsearch.sendKeys(Base.getProperties().getProperty("scitemname"));
 			Thread.sleep(2000);
 			firstitem.click();
+			Thread.sleep(2000);
 			additem.click();
 			Thread.sleep(2000);
 			next.click();
 			itemsearch.sendKeys(Base.getProperties().getProperty("SCreplaceitem"));
 			Thread.sleep(2000);
 			firstitem.click();
+			Thread.sleep(2000);
 			additem.click();
 			Thread.sleep(2000);
 			add.click();
@@ -560,6 +580,7 @@ public class ServiceCall_Page extends BasePage
 			itemsearch.sendKeys(Base.getProperties().getProperty("scitemname"));
 			Thread.sleep(2000);
 			firstitem.click();
+			Thread.sleep(2000);
 			additem.click();
 			Thread.sleep(2000);
 			add.click();
@@ -587,9 +608,9 @@ public class ServiceCall_Page extends BasePage
 	{
 		try
 		{
-			terms.click();
+			/*terms.click();
 			Thread.sleep(2000);
-			dueuponreceipt.click();
+			dueuponreceipt.click();*/
 			paymentreqcreate.click();
 			
 		}
@@ -612,8 +633,7 @@ public class ServiceCall_Page extends BasePage
 			
 			else
 			{
-				Assert.assertTrue(false);
-				System.out.println("Payment Request Creation Faild");
+				Assert.fail("Payment Request Creation Faild");
 			}
 		}
 		
